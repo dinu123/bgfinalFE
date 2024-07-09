@@ -29,14 +29,18 @@ const LoginForm = () => {
             const response = await _createlogin('/users/login', formData);
             console.log(response);
             const { token,user_role } = response; 
-            console.log(token)
             localStorage.setItem('token', token);
             localStorage.setItem('user_role', user_role);
+            if(user_role === 2) {
+                localStorage.setItem('client_id', response?.client_id);
+            }
             setFormData({ username: '', password: '' }); 
             setError(null); 
-            if(user_role === '3') {
+            if(user_role === 3) {
              router.push('/admin/candidates/add-candidates');
-            } else {
+            } else if (user_role === 2) {
+                router.push('/admin/companies');
+            }else {
             router.push('/admin/admin-dashboard');
             }
             

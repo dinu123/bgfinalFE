@@ -6,8 +6,8 @@ const handleApiError = (error) => {
   throw new Error('An error occurred while communicating with the API');
 };
 
-const BASE_URL = 'https://bgapi.restaurantapp.in';
-//const BASE_URL = 'http://localhost:9000';
+// export const BASE_URL = 'https://bgapi.restaurantapp.in';
+export const BASE_URL = 'http://localhost:9000';
 
 
 

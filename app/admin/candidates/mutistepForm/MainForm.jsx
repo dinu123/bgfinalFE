@@ -46,22 +46,33 @@ const MainForm = () => {
       let payload = { ...formData };
       
       if (activeStep === 0) {
-        const response = await _create(stepEndpoints[activeStep], payload);
-        console.log(response);
-        if(response.isError) {
-          toast.error(response.msg);
-          return 
+        if(!payload.id) {
+          const response = await _create(stepEndpoints[activeStep], payload);
+          console.log(response);
+          if(response.isError) {
+            toast.error(response.msg);
+            return 
+          }
+          setActiveStep((prevStep) => prevStep + 1);
+          const id = response.id;
+          console.log("responseId:", id);
+          setCandidateId(id);
+        } else {
+          setActiveStep((prevStep) => prevStep + 1);
         }
-        setActiveStep((prevStep) => prevStep + 1);
-        const id = response.id;
-        console.log("responseId:", id);
-        setCandidateId(id);
+      
       } else {
         payload = {
           ...payload,
-          id: candidateId
+          candidate_id: candidateId
         };
-        await _create(stepEndpoints[activeStep], payload);
+        if(!payload.id) {
+          await _create(stepEndpoints[activeStep], payload);
+          setActiveStep((prevStep) => prevStep + 1);
+        } else {
+          setActiveStep((prevStep) => prevStep + 1);
+        }
+        
       }
  
       console.log('Form data submitted successfully for step:', activeStep);

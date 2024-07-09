@@ -12,7 +12,8 @@ const inputFields = [
     { name: 'designation', placeholder: 'Designation', label: 'Designation', type: 'text', icon: <FaUser /> },
     { name: 'department', placeholder: 'Department', label: 'Department', type: 'text', icon: <FaUser /> },
     { name: 'email_id', placeholder: 'Email ID', label: 'Email', type: 'email', icon: <FaEnvelope /> },
-    { name: 'mobile_number', placeholder: 'Phone Number', label: 'Phone Number', type: 'text', icon: <FaMobile /> }
+    { name: 'mobile_number', placeholder: 'Phone Number', label: 'Phone Number', type: 'text', icon: <FaMobile /> },
+    { name: 'process_list', placeholder: 'Enter Process List exp: test, test1,test2', label: 'Process', type: 'text', icon: <FaMobile /> }
 ];
 
 const NewClientForm = ({ client, onClose, updateClientList }) => {
@@ -26,7 +27,8 @@ const NewClientForm = ({ client, onClose, updateClientList }) => {
         designation: client ? client.designation : '',
         department: client ? client.department : '',
         email_id: client ? client.email_id : '',
-        mobile_number: client ? client.mobile_number : ''
+        mobile_number: client ? client.mobile_number : '',
+        process_list: client ? client.process_list.join(","): []
     };
 
     useEffect(() => {
@@ -43,6 +45,7 @@ const NewClientForm = ({ client, onClose, updateClientList }) => {
 
     const onSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
+            values.process_list = values.process_list.split(",");
             if (client) {
                 await _update('client', client.id, values);
                 setSuccessMessage('Company updated successfully!');
